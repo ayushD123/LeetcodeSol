@@ -1,37 +1,19 @@
 class Solution {
 public:
     int maximumScore(int a, int b, int c) {
-        int score = 0;
+       int score = 0;
     while (true) {
-        if (a == 0 && b == 0) break;
-        if (a == 0 && c == 0) break;
-        if (b == 0 && c == 0) break;
+        // Sort the piles in descending order
+        if (a < b) swap(a, b);
+        if (a < c) swap(a, c);
+        if (b < c) swap(b, c);
 
-        if (a >= b && a >= c) {
-            if (b >= c) {
-                a--;
-                b--;
-            } else {
-                a--;
-                c--;
-            }
-        } else if (b >= a && b >= c) {
-            if (a >= c) {
-                b--;
-                a--;
-            } else {
-                b--;
-                c--;
-            }
-        } else { //c is largest
-            if (a >= b) {
-                c--;
-                a--;
-            } else {
-                c--;
-                b--;
-            }
-        }
+        // If two piles are empty, the game ends
+        if (b == 0) break; 
+
+        // Take stones from the two largest piles
+        a--;
+        b--;
         score++;
     }
     return score;
