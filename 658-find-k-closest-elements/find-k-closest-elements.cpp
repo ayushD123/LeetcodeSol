@@ -1,16 +1,23 @@
 class Solution {
 public:
     vector<int> findClosestElements(vector<int>& arr, int k, int x) {
-     priority_queue<pair<int,int> , vector<pair<int,int>>,greater<pair<int,int>>> pq;
-    for(auto it:arr){
-        pq.push({abs(it-x),it});
+          int left = 0;
+    int right = arr.size() - k;
+
+    while (left < right) {
+        int mid = left + (right - left) / 2;
+        // Correct comparison considering duplicates and the "a < b" tiebreaker:
+        if (x - arr[mid] > arr[mid + k] - x) { 
+            left = mid + 1;
+        } else {
+            right = mid;
+        }
     }
-    vector<int> ans;
-    while(k--){
-        ans.push_back(pq.top().second);
-        pq.pop();
+
+    std::vector<int> result;
+    for (int i = left; i < left + k; i++) {
+        result.push_back(arr[i]);
     }
-    sort(ans.begin(),ans.end());
-    return ans;
+    return result;
     }
 };
